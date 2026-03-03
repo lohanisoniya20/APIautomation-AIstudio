@@ -1,0 +1,9 @@
+S.NO,TESTCASE_ID,TESTCASE_TYPE,firstName,lastName,email,userRole,EXPECTED_RESULT
+1,TC_1_valid_registration,Positive,test,usermar3,testusermar3@gmail.com,USER,Success
+2,TC_2_missing_firstName,Negative,,usermar3,testusermar3@gmail.com,USER,First name is required
+3,TC_3_missing_lastName,Negative,test,,testusermar3@gmail.com,USER,Last name is required
+4,TC_4_invalid_email,Negative,test,usermar3,invalid-email,USER,Invalid email format
+5,TC_5_empty_email,Negative,test,usermar3,,USER,Email cannot be empty
+6,TC_6_missing_userRole,Negative,test,usermar3,testusermar3@gmail.com,,User role is required
+7,TC_7_invalid_userRole,Negative,test,usermar3,testusermar3@gmail.com,INVALID_ROLE,Invalid user role
+8,TC_8_null_firstName,Negative,null,usermar3,testusermar3@gmail.com,USER,First name cannot be null
