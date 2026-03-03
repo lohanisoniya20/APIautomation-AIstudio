@@ -189,6 +189,30 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Ignore status ">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="0"></stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">true</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+            <stringProp name="TestPlan.comments">ignore status code </stringProp>
+            <stringProp name="Assertion.scope">all</stringProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Dynamic Message Check">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="96920656">${EXPECTED_RESULT}</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+            <stringProp name="TestPlan.comments">check if the error message matches the specific row in the test data CSV.</stringProp>
+            <stringProp name="Assertion.scope">all</stringProp>
+          </ResponseAssertion>
+          <hashTree/>
         </hashTree>
         <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
           <collectionProp name="HeaderManager.headers">
