@@ -35,7 +35,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Datahub_login">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Datahub_login" enabled="true">
         <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">1000</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -46,7 +46,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Test Data Set ">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Test Data Set " enabled="true">
           <stringProp name="filename">C:/Users/FM-PC-LT-206/Documents/APIautomation-Datahub/Test-Data/login.csv</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">S.NO,TESTCASE_ID,TESTCASE_TYPE,email,password,EXPECTED_RESULT</stringProp>
@@ -58,13 +58,13 @@
           <stringProp name="shareMode">shareMode.all</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Positive Test Cases" enabled="true">
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Positive Test Cases">
           <stringProp name="IfController.condition">${__groovy(&quot;${TESTCASE_TYPE}&quot; == &quot;Positive&quot;,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Positive" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="login positive - ${TESTCASE_ID}">
             <stringProp name="HTTPSampler.path">/api/auth/login</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -112,7 +112,7 @@
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Negative login-$(TESTCASE_ID)" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="login negative - ${TESTCASE_ID}">
             <stringProp name="HTTPSampler.path">/api/auth/login</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>

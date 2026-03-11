@@ -1,0 +1,7 @@
+S.NO,TESTCASE_ID,TESTCASE_TYPE,name,engine_id,id,roleId,EXPECTED_RESULT
+1,TC_01_Valid Payload Request,Positive,Fraud Detection test 77,2,936,2,Project Created Successfully
+2,TC_02_Empty Name field,Negative,,2,936,2,name should not be empty
+3,TC_03_Non-numeric engine_id,Negative,Fraud Detection test 1,gjhdghj,936,2,engine_id must be a number conforming to the specified constraints
+4,TC_04_Missing ID in can_be_accessed_by_ids,Negative,Fraud Detection test 1777,2,,2,Id must not be empty 
+5,TC_05_Invalid roleId (negative number),Negative,Fraud Detection test 1,2,936,-1,Invalid role id 
+6,TC_06_Long Name string exceed limit,Negative,AAAAAAAAAAAAAAA87687687AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,2,936,2,exceeded name character length

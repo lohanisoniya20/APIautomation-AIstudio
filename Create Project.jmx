@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Add User- Single">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Create Project">
       <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
@@ -63,7 +63,7 @@
             <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor">
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
@@ -84,7 +84,7 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
         </HeaderManager>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Add Single User">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Create project">
         <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -96,9 +96,9 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
       </ThreadGroup>
       <hashTree>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Test Data Set ">
-          <stringProp name="filename">C:/Users/FM-PC-LT-206/Documents/APIautomation-AIstudio/Test-data/Addsingleuser.csv</stringProp>
+          <stringProp name="filename">C:/Users/FM-PC-LT-206/Documents/APIautomation-AIstudio/Test-data/createproject.csv</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="variableNames">S.NO, TESTCASE_ID, TESTCASE_TYPE, firstName, lastName, email, userRole, EXPECTED_RESULT</stringProp>
+          <stringProp name="variableNames">S.NO, TESTCASE_ID, TESTCASE_TYPE, name, engine_id, id, roleId, EXPECTED_RESULT</stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>
           <stringProp name="delimiter">,</stringProp>
           <boolProp name="quotedData">true</boolProp>
@@ -115,21 +115,21 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
             </elementProp>
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">Authorization</stringProp>
-              <stringProp name="Header.value">Bearer ${__P(global_access_token,)}</stringProp>
+              <stringProp name="Header.value">Bearer ${__P(global_access_token)}</stringProp>
             </elementProp>
           </collectionProp>
         </HeaderManager>
         <hashTree/>
-        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="positive cases">
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Positive cases">
           <stringProp name="IfController.condition">${__groovy(&quot;${TESTCASE_TYPE}&quot; == &quot;Positive&quot;,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="single user - ${TESTCASE_ID}">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create new project - ${TESTCASE_ID}">
             <stringProp name="TestPlan.comments">
 </stringProp>
-            <stringProp name="HTTPSampler.path">/api/users</stringProp>
+            <stringProp name="HTTPSampler.path">/api/projects</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -139,10 +139,15 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-  &quot;firstName&quot;: &quot;${firstName}&quot;,&#xd;
-  &quot;lastName&quot;: &quot;${lastName}&quot;,&#xd;
-  &quot;email&quot;: &quot;${email}&quot;,&#xd;
-  &quot;userRole&quot;: &quot;${userRole}&quot;&#xd;
+  &quot;name&quot;: &quot;${name}&quot;,&#xd;
+  &quot;engine_id&quot;: ${engine_id},&#xd;
+  &quot;can_be_accessed_by_ids&quot;: [&#xd;
+    {&#xd;
+      &quot;roleId&quot;: [&#xd;
+        &quot;${roleId}&quot;&#xd;
+      ]&#xd;
+    }&#xd;
+  ]&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
@@ -151,18 +156,16 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Negative cases" enabled="true">
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Negative cases">
           <stringProp name="IfController.condition">${__groovy(&quot;${TESTCASE_TYPE}&quot; == &quot;Negative&quot;,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="single user - ${TESTCASE_ID}" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create new project - ${TESTCASE_ID}">
             <stringProp name="TestPlan.comments">
 </stringProp>
-            <stringProp name="HTTPSampler.domain">devstudio.fuse.ai</stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.path">/api/users</stringProp>
+            <stringProp name="HTTPSampler.path">/api/projects</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -172,16 +175,34 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-  &quot;firstName&quot;: &quot;${firstName}&quot;,&#xd;
-  &quot;lastName&quot;: &quot;${lastName}&quot;,&#xd;
-  &quot;email&quot;: &quot;${email}&quot;,&#xd;
-  &quot;userRole&quot;: &quot;${userRole}&quot;&#xd;
+  &quot;name&quot;: &quot;${name}&quot;,&#xd;
+  &quot;engine_id&quot;: ${engine_id_json},&#xd;
+  &quot;can_be_accessed_by_ids&quot;: [&#xd;
+    {&#xd;
+      &quot;roleId&quot;: [&#xd;
+        &quot;${roleId}&quot;&#xd;
+      ]&#xd;
+    }&#xd;
+  ]&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
           </HTTPSamplerProxy>
+          <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">def engine = vars.get(&quot;engine_id&quot;) // get value from CSV
+if(engine.isInteger()) {
+    vars.put(&quot;engine_id_json&quot;, engine) // no quotes
+} else {
+    vars.put(&quot;engine_id_json&quot;, &quot;\&quot;${engine}\&quot;&quot;) // keep quotes
+}</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Ignore status " enabled="true">
             <collectionProp name="Asserion.test_strings">
@@ -195,7 +216,7 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
             <stringProp name="Assertion.scope">all</stringProp>
           </ResponseAssertion>
           <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Dynamic Message Check" enabled="true">
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Dynamic Message Check">
             <collectionProp name="Asserion.test_strings">
               <stringProp name="96920656">${EXPECTED_RESULT}</stringProp>
             </collectionProp>
@@ -208,15 +229,6 @@ props.put(&quot;global_access_token&quot;, vars.get(&quot;access_token&quot;));<
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
-          <collectionProp name="HeaderManager.headers">
-            <elementProp name="" elementType="Header">
-              <stringProp name="Header.name">Authorization</stringProp>
-              <stringProp name="Header.value">Bearer ${access_token}</stringProp>
-            </elementProp>
-          </collectionProp>
-        </HeaderManager>
-        <hashTree/>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
